@@ -1,8 +1,14 @@
 machine:
+  pre:
+    - sudo sed -i 's/-s btrfs //' /etc/default/docker
+    - sudo mkdir /var/lib/docker
+    - sudo mount -t tmpfs -o size=16G tmpfs /var/lib/docker
   services:
     - docker
 
 test:
+  pre:
+    - docker info
   override:
     - docker run ubuntu:14.04 sleep 10
     - echo done
